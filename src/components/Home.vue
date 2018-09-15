@@ -1,11 +1,14 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs4 v-for="movie in movies" :key="movie._id">
+    <v-flex xs4 v-for="(movie, index) in movies" :key="index">
       <v-card>
         <v-card-title primary-title>
           <div>
             <div class="headline">{{ movie.name }}</div>
-            <span class="grey--text">{{ movie.release_year }} &bull; {{ movie.genre }} &bull; {{ movie.movie_length }}</span>
+            <span class="grey--text">
+              {{ movie.release_year }} &bull;
+              {{ movie.genre }} &bull;
+              {{ movie.movie_length }}</span>
           </div>
         </v-card-title>
         <v-card-text>

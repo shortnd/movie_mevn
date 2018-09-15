@@ -1,11 +1,10 @@
 const MovieSchema = require('../models/Movie');
 
 module.exports.controller = (app) => {
-  // get all movies
-  app.get('/movies', (request, response) => {
-    MovieSchema.find({}, 'name description release_year movie_length, genre', (error, movies) => {
+  app.get('/movies', (req, res) => {
+    MovieSchema.find({}, 'name description release_year movie_length genre', (error, movies) => {
       if (error) { console.log(error); }
-      response.send({
+      res.send({
         movies,
       });
     });
@@ -21,6 +20,7 @@ module.exports.controller = (app) => {
     });
 
     newMovie.save((error, movie) => {
+      // eslint-disable-next-line
       if (error) { console.log(error); }
       response.send(movie);
     });
