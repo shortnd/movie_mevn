@@ -1,13 +1,6 @@
 const User = require('../models/User');
 
 module.exports.controller = (app) => {
-  // Get all users
-  // app.get('/users', (req, res) => {
-  //   User.find({}, 'name email', (error, users) => {
-  //     if (error) { console.log(error); }
-  //     res.send(users);
-  //   });
-  // });
   // register a user
   app.post('/users/register', (req, res) => {
     const name = req.body.name;
@@ -19,7 +12,11 @@ module.exports.controller = (app) => {
       password,
     });
     User.createUser(newUser, (error, user) => {
-      if (error) { console.log(error); }
+      if (error) {
+        res.status(422).json({
+          message: 'Something went wrong. Please try again after some time!',
+        });
+      }
       res.send({ user });
     });
   });

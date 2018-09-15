@@ -23,8 +23,47 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  data: () => ({
+    valid: true,
+    name: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+    emailRules: [
+      v => !!v || 'E-email is required',
+      v => /\S+@\S+\.\S+/.test(v) || 'E-email must be valid',
+    ],
+  }),
+  methods: {
+    async submit() {
+      if (this.$refs.form.validate()) {
+        return axios.post('http://localhost:8081/users/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        }, { headers: { 'Content-Type': 'application/json' } })
+          .then(() => {
+            this.$swal(
+              'Great!',
+              'You have successfully been registered!',
+              'success',
+            );
+            this.$router.push({ name: 'Login' });
+          })
+          .catch((error) => {
+            const message = error.response.data.message;
+            this.$swal('Oh no!', `${message}`, 'error');
+          });
+      }
+      return true;
+    },
+    async clear() {
+      this.$refs.form.reset();
+    },
+  },
 };
 </script>
 
