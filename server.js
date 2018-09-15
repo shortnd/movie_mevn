@@ -4,12 +4,15 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 const app = express();
 const router = express.Router();
 app.use(morgan('combined'));
 app.use(bodyPaser.json());
 app.use(cors());
+app.use(passport.initialize());
 
 // connect to mongodb
 mongoose.connect('mongodb://localhost/movie_mevn', function() {
