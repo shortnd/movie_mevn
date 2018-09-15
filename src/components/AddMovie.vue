@@ -66,11 +66,20 @@ export default {
           genre: this.genre,
         }, { headers: { 'Content-Type': 'application/json' } })
           .then(() => {
+            this.$swal(
+              'Great',
+              'Movie added succesfully!',
+              'success',
+            );
             this.$router.push({ name: 'Home' });
             this.$refs.form.reset();
           })
           .catch(() => {
-            //
+            this.$swal(
+              'Oh no!',
+              'Could not add this movie!',
+              'error',
+            );
           });
       }
       return true;
