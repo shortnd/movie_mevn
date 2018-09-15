@@ -26,6 +26,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-star-rating": "^1.6.0",
