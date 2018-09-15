@@ -2,7 +2,7 @@ const MovieSchema = require('../models/Movie');
 
 module.exports.controller = (app) => {
   // add a new movie
-  app.post('/movies', (request, response) => {
+  app.post('/movies/add', (request, response) => {
     const newMovie = new MovieSchema({
       name: request.body.name,
       description: request.body.description,
