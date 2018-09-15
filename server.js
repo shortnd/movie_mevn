@@ -20,6 +20,14 @@ mongoose.connect('mongodb://localhost/movie_mevn', function() {
   process.exit(1);
 });
 
+// Includes controller that has routes for each model
+fs.readdirSync('controllers').forEach(function (file) {
+  if (file.substr(-3) == '.js') {
+    const route = require('./controllers/' + file)
+    route.controller(app)
+  }
+})
+
 router.get('/', function(request, response) {
   response.json({ message: 'API Initalized!' });
 });
