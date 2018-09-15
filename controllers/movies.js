@@ -7,6 +7,7 @@ module.exports.controller = (app) => {
       name: request.body.name,
       description: request.body.description,
       release_year: request.body.release_year,
+      movie_length: request.body.movie_length,
       genre: request.body.genre,
     });
 

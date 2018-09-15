@@ -5,6 +5,7 @@ const MovieSchema = new Schema({
   name: String,
   description: String,
   release_year: Number,
+  movie_length: String,
   genre: String,
 });
 

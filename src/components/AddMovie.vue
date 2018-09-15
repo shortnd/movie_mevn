@@ -16,6 +16,10 @@
       required
       :rules="releaseRules"></v-select>
     <v-text-field
+      label="Movie Length"
+      v-model="movie_length"
+      required></v-text-field>
+    <v-text-field
       label="Movie Genre"
       v-model="genre"
       required
@@ -36,6 +40,7 @@ export default {
     valid: true,
     name: '',
     description: '',
+    movie_length: '',
     genre: '',
     release_year: '',
     nameRules: [
@@ -63,6 +68,7 @@ export default {
           name: this.name,
           description: this.description,
           release_year: this.release_year,
+          movie_length: this.movie_length,
           genre: this.genre,
         }, { headers: { 'Content-Type': 'application/json' } })
           .then(() => {
