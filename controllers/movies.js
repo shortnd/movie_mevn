@@ -9,6 +9,13 @@ module.exports.controller = (app) => {
       });
     });
   });
+  // Get a single movie
+  app.get('/movies/:id', (req, res) => {
+    MovieSchema.findById(req.params.id, 'name description release_year movie_length genre', (error, movie) => {
+      if (error) { console.error(error); }
+      res.send(movie);
+    });
+  });
   // add a new movie
   app.post('/movies/add', (request, response) => {
     const newMovie = new MovieSchema({
