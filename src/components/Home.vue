@@ -42,11 +42,12 @@ export default {
   },
   methods: {
     async fetchMovies() {
-      return axios.get('http://localhost:8081/movies').then((response) => {
+      const token = window.localStorage.getItem('auth');
+      return axios.get('http://localhost:8081/movies', { headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
+      }).then((response) => {
         this.movies = response.data.movies;
-      }).catch(() => {
-
-      });
+        this.current_user = response.data.current_user;
+      }).catch(() => {});
     },
   },
 };
