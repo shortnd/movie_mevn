@@ -16,6 +16,9 @@ jwtOptions.secretOrKey = 'movieratingapplicationsecretkey';
 
 const app = express();
 const router = express.Router();
+const serveStatic = require('serve-static');
+const history = require('connect-history-api-fallback');
+
 app.use(morgan('combined'));
 app.use(bodyPaser.json());
 app.use(cors());
@@ -33,10 +36,14 @@ mongoose.connect('mongodb://localhost/movie_mevn', () => {
 // Includes controller that has routes for each model
 fs.readdirSync('controllers').forEach((file) => {
   if (file.substr(-3) === '.js') {
-    const route = require(`./controllers/${file}`);
+    // eslint-disable-next-line
+    const route = require('./controllers/'+ file);
     route.controller(app);
   }
 });
+app.use(history());
+// eslint-disable-next-line
+app.use(serveStatic(__dirname + '/dist'));
 
 router.get('/', (request, response) => {
   response.json({ message: 'API Initalized!' });

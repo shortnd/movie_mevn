@@ -27,12 +27,12 @@ export default {
     password: '',
     emailRules: [
       v => !!v || 'E-mail is required',
-      v => /\S+@\S+\.\S+/.text(v) || 'E-mail must be valid',
+      v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
     ],
   }),
   methods: {
     async submit() {
-      return axios.post('http://localhost:8081/users/login', {
+      return axios.post('/users/login', {
         email: this.email,
         password: this.password,
       }, { headers: {

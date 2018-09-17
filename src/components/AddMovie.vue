@@ -64,7 +64,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        return axios.post('http://localhost:8081/movies/add', {
+        return axios.post('/movies/add', {
           name: this.name,
           description: this.description,
           release_year: this.release_year,

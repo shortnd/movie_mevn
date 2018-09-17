@@ -69,7 +69,7 @@ export default {
         },
       }).then(() => {
         const movieId = this.$route.params.id;
-        return axios.post(`http://localhost:8081/movies/rate/${movieId}`, { header: {
+        return axios.post(`/movies/rate/${movieId}`, { header: {
           'Content-Type': 'application/json',
         } }).then(() => {
           this.$swal(`Thank you for rating! ${state.note}`, 'success');
@@ -80,7 +80,7 @@ export default {
       });
     },
     async fetchMovie() {
-      return axios.get(`http://localhost:8081/movies/${this.$route.params.id}`).then((response) => {
+      return axios.get(`/movies/${this.$route.params.id}`).then((response) => {
         this.movie = response.data;
       }).catch(() => {
       });

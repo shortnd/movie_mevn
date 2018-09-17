@@ -34,13 +34,13 @@ export default {
     confirm_password: '',
     emailRules: [
       v => !!v || 'E-email is required',
-      v => /\S+@\S+\.\S+/.test(v) || 'E-email must be valid',
+      v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-email must be valid',
     ],
   }),
   methods: {
     async submit() {
       if (this.$refs.form.validate()) {
-        return axios.post('http://localhost:8081/users/register', {
+        return axios.post('/users/register', {
           name: this.name,
           email: this.email,
           password: this.password,
