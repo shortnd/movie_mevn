@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 const fs = require('fs');
+const session = require('express-session');
+const config = require('./config/Config');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
@@ -22,10 +24,17 @@ const history = require('connect-history-api-fallback');
 app.use(morgan('combined'));
 app.use(bodyPaser.json());
 app.use(cors());
+app.use(session({
+  secret: config.SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { httpOnly: false },
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/movie_mevn', () => {
+mongoose.connect(config.DB, () => {
   console.log('Connection has been made');
 })
   .catch((error) => {
@@ -44,6 +53,26 @@ fs.readdirSync('controllers').forEach((file) => {
 app.use(history());
 // eslint-disable-next-line
 app.use(serveStatic(__dirname + '/dist'));
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+  console.log('error! auth failed');
+}
+
+router.get('/api/current_user', isLoggedIn, (req, res) => {
+  if (req.user) {
+    res.send({ current_user: req.user });
+  } else {
+    res.status(403).send({ success: false, msg: 'Unauthorized.' });
+  }
+});
+
+router.get('/api/logout', (req, res) => {
+  req.logout();
+  res.send();
+});
+
 
 router.get('/', (request, response) => {
   response.json({ message: 'API Initalized!' });
