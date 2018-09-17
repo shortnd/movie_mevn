@@ -7,6 +7,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
+
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const jwtOptions = {};
@@ -21,29 +22,29 @@ app.use(cors());
 app.use(passport.initialize());
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/movie_mevn', function() {
+mongoose.connect('mongodb://localhost/movie_mevn', () => {
   console.log('Connection has been made');
 })
-.catch(error => {
-  console.error('App starting error:', error.stack);
-  process.exit(1);
-});
+  .catch((error) => {
+    console.error('App starting error:', error.stack);
+    process.exit(1);
+  });
 
 // Includes controller that has routes for each model
-fs.readdirSync('controllers').forEach(function (file) {
-  if (file.substr(-3) == '.js') {
-    const route = require('./controllers/' + file)
-    route.controller(app)
+fs.readdirSync('controllers').forEach((file) => {
+  if (file.substr(-3) === '.js') {
+    const route = require(`./controllers/${file}`);
+    route.controller(app);
   }
-})
+});
 
-router.get('/', function(request, response) {
+router.get('/', (request, response) => {
   response.json({ message: 'API Initalized!' });
 });
 
 const port = process.env.PORT || 8081;
 app.use('/', router);
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log(`api running on port ${port}`);
 });

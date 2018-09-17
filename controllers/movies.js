@@ -1,6 +1,12 @@
 const MovieSchema = require('../models/Movie');
 const Rating = require('../models/Rating');
 const passport = require('passport');
+const passportJWT = require('passport-jwt');
+
+const ExtractJwt = passportJWT.ExtractJwt;
+const jwtOptions = {};
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+jwtOptions.secretOrKey = 'thisisthesecretkey';
 
 module.exports.controller = (app) => {
   // Fetch all movies
